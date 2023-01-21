@@ -1,0 +1,29 @@
+* {
+  box-sizing: border-box;
+  font-family: "Roboto", sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: gray;
+}
+
+.card {
+  padding: 20px;
+  border-radius: 20px;
+  background-color: white;
+}
+
+.card .title {
+  font-size: 20px;
+}
+
+
+.card .author {
+  font-size: 16px;
+}
+
+.card .numOfPages {
+  font-size: 16px;
+}
