@@ -18,6 +18,11 @@
             2
         ],
         "no-unused-vars": "warn",
-        "semi": "error"
+        "semi": "error",
+        "quotes": [
+            "error",
+            "single"
+        ],
+        "no-param-reassign": "off"
     }
 }

@@ -5,13 +5,108 @@
   padding: 0;
 }
 
-body {
+body {}
+
+.overlay {
+  position: fixed;
+  display: none;
+  width: 100%;
+  height: 100%;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1;
+}
+
+.addBook {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border: 2px solid black;
+  border-radius: 20px;
+  padding: 20px;
+  z-index: 2;
+  transform-origin: 0 0;
+  transition: scale 0.5s;
+  scale: 0;
+  background-color: white;
+}
+
+.addBookForm {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  align-items: flex-start;
+}
+
+.addBookForm input {
+  font-size: large;
+  border: 1px solid black;
+  border-radius: 8px;
+  padding: 8px;
+}
+
+.addBookForm label {
+  display: flex;
+  gap: 10px;
+  font-size: large;
+  color: rgba(0, 0, 0, 0.9);
+  align-items: center;
+}
+
+.addBookForm #read {
+  width: 22px;
+  height: 22px;
+}
+
+.submitButton {
+  align-self: flex-end;
+  padding: 10px;
+  font-size: large;
+  border: 2px solid black;
+  border-radius: 10px;
+  background-color: greenyellow;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  padding: 50px;
+  gap: 30px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.addButton {
+  align-self: flex-end;
+  width: 50px;
+  height: 50px;
+  padding: 10px;
+  font-size: large;
+  font-weight: bold;
+  border: 2px solid black;
+  border-radius: 10px;
+  background-color: greenyellow;
+}
+
+.card-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
 }
 
 .card {
+  flex: 1;
   padding: 20px;
   border: 2px solid black;
   border-radius: 20px;
+  min-width: 20%;
   background-color: white;
 }
 

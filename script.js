@@ -1,15 +1,20 @@
 const cardContainer = document.querySelector('.card-container');
-
+const addButton = document.querySelector('.addButton');
+const addBook = document.querySelector('.addBook');
+const submitButton = document.querySelector('.submitButton');
+const formElements = document.querySelectorAll('.addBookForm>input');
+const readCheckbox = document.querySelector('#read');
+const overlay = document.querySelector('.overlay');
 const myLibrary = [];
 
-function Book(title, author, description, numOfPages, read) {
+
+function Book(title, author, numOfPages, read) {
   this.title = title;
   this.author = author;
-  this.description = description;
   this.numOfPages = numOfPages;
   this.read = read;
   this.info = function bookInformationToString() {
-    return `${title} by ${author}, ${numOfPages} pages, ${read}`;
+    return `${title} by ${author}, ${numOfPages} pages, ${read ? 'read' : 'not read'}`;
   };
 }
 
@@ -24,22 +29,17 @@ function createBookCard(book) {
 
   const author = document.createElement('div');
   author.classList.add('author');
-  author.innerText = book.author;
+  author.innerText = `Author: ${book.author}`;
   card.appendChild(author);
-
-  const description = document.createElement('div');
-  description.classList.add('description');
-  description.innerText = book.description;
-  card.appendChild(description);
 
   const numOfPages = document.createElement('div');
   numOfPages.classList.add('numOfPages');
-  numOfPages.innerText = book.numOfPages;
+  numOfPages.innerText = `Number of pages: ${book.numOfPages}`;
   card.appendChild(numOfPages);
 
   const readIndicator = document.createElement('div');
   readIndicator.classList.add('readIndicator');
-  readIndicator.innerText = book.read;
+  readIndicator.innerText = `Status: ${book.read ? 'read' : 'not read'}`;
   card.appendChild(readIndicator);
 
   return card;
@@ -57,7 +57,36 @@ function displayBooks() {
   });
 }
 
-addBookToLibrary('Flight of the Storks', 'Jean-Christophe Grangé', 'Every year the storks set off on their miraculous 12,000-mile migration from Northern Europe to Central Africa. Then one year, inexplicably, they do not return. At the invitation of the wealthy Swiss ornithologist Max Boehm, a young French academic, Louis Antioch, agrees to undertake a journey tracing the flight of the storks in an attempt to solve the mystery of the birds\' disappearance. Before Antioch can set off on his trip, however, Boehm dies of a heart attack under suspicious circumstances, or so the police believe. This is the background to Jean-Christophe Grangé\'s pulsating and darkly mysterious new thriller. Its plot moves at a dramatic pace, from a Bulgarian Gypsy encampment to Israeli kibbutzim and to Calcutta from the green jungles of Central Africa. As the mystery deepens, it becomes clear that it is not only the stork that is an endangered species. Jean-Christophe Grangé was born in Paris in 1961. His acclaimed thriller, Blood-red Rivers (Harvill, 2000), has become an international bestseller.', 327, 'read');
-addBookToLibrary('The Hobbit', 'J.R.R Tolkien', 'In a hole in the ground there lived a hobbit. Not a nasty, dirty, wet hole, filled with the ends of worms and an oozy smell, nor yet a dry, bare, sandy hole with nothing in it to sit down on or to eat: it was a hobbit-hole, and that means comfort. Written for J.R.R. Tolkien’s own children, The Hobbit met with instant critical acclaim when it was first published in 1937. Now recognized as a timeless classic, this introduction to the hobbit Bilbo Baggins, the wizard Gandalf, Gollum, and the spectacular world of Middle-earth recounts of the adventures of a reluctant hero, a powerful and dangerous ring, and the cruel dragon Smaug the Magnificent. The text in this 372-page paperback edition is based on that first published in Great Britain by Collins Modern Classics (1998), and includes a note on the text by Douglas A. Anderson (2001).', 366, 'not read');
+function showAddBookForm() {
+  addBook.style.scale = 1;
+  overlay.style.display = 'block';
+}
+
+function hideAddBookForm() {
+  overlay.style.display = 'none';
+  formElements.forEach((element) => {
+    element.value = '';
+  });
+  readCheckbox.checked = false;
+  addBook.style.scale = 0;
+}
+
+
+addButton.addEventListener('click', showAddBookForm);
+
+submitButton.addEventListener('click', () => {
+  addBookToLibrary(formElements[0].value, formElements[1].value, formElements[2].value, readCheckbox.checked);
+  hideAddBookForm();
+  displayBooks();
+});
+
+overlay.addEventListener('click', () => {
+  hideAddBookForm();
+});
+
+
+addBookToLibrary('Flight of the Storks', 'Jean-Christophe Grangé', 327, true);
+addBookToLibrary('The Hobbit', 'J.R.R Tolkien', 366, false);
+addBookToLibrary('Little Prince', 'Antione de Saint-Exupery', 96, true);
 
 displayBooks();
