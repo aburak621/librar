@@ -5,7 +5,7 @@ const submitButton = document.querySelector('.submitButton');
 const formElements = document.querySelectorAll('.addBookForm>input');
 const readCheckbox = document.querySelector('#read');
 const overlay = document.querySelector('.overlay');
-const myLibrary = [];
+let myLibrary = [];
 
 
 function Book(title, author, numOfPages, read) {
@@ -18,6 +18,11 @@ function Book(title, author, numOfPages, read) {
   };
 }
 
+function updateReadStatus(e) {
+  const bookToUpdate = myLibrary.find((book) => book.title === e.target.dataset.bookTitle);
+  bookToUpdate.read = e.target.checked;
+}
+
 function createBookCard(book) {
   const card = document.createElement('div');
   card.classList.add('card');
@@ -25,6 +30,13 @@ function createBookCard(book) {
   const title = document.createElement('div');
   title.classList.add('title');
   title.innerText = book.title;
+  const removeButton = document.createElement('div');
+  removeButton.classList.add('removeButton');
+  removeButton.innerText = 'X';
+  removeButton.dataset.bookTitle = book.title;
+  // eslint-disable-next-line no-use-before-define
+  removeButton.addEventListener('click', removeBook);
+  title.appendChild(removeButton);
   card.appendChild(title);
 
   const author = document.createElement('div');
@@ -37,10 +49,16 @@ function createBookCard(book) {
   numOfPages.innerText = `Number of pages: ${book.numOfPages}`;
   card.appendChild(numOfPages);
 
-  const readIndicator = document.createElement('div');
-  readIndicator.classList.add('readIndicator');
-  readIndicator.innerText = `Status: ${book.read ? 'read' : 'not read'}`;
-  card.appendChild(readIndicator);
+  const label = document.createElement('label');
+  label.classList.add('label');
+  label.innerText = 'Read: ';
+  const readIndicator = document.createElement('input');
+  readIndicator.type = 'checkbox';
+  readIndicator.dataset.bookTitle = book.title;
+  readIndicator.checked = book.read;
+  readIndicator.addEventListener('click', updateReadStatus);
+  label.appendChild(readIndicator);
+  card.appendChild(label);
 
   return card;
 }
@@ -55,6 +73,11 @@ function displayBooks() {
   myLibrary.forEach((book) => {
     cardContainer.appendChild(createBookCard(book));
   });
+}
+
+function removeBook(e) {
+  myLibrary = myLibrary.filter((book) => book.title !== e.target.dataset.bookTitle); 
+  displayBooks();
 }
 
 function showAddBookForm() {
