@@ -76,7 +76,7 @@ function displayBooks() {
 }
 
 function removeBook(e) {
-  myLibrary = myLibrary.filter((book) => book.title !== e.target.dataset.bookTitle); 
+  myLibrary = myLibrary.filter((book) => book.title !== e.target.dataset.bookTitle);
   displayBooks();
 }
 

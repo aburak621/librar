@@ -5,8 +5,6 @@
   padding: 0;
 }
 
-body {}
-
 .overlay {
   position: fixed;
   display: none;
