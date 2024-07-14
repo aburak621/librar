@@ -8,14 +8,16 @@ const overlay = document.querySelector('.overlay');
 let myLibrary = [];
 
 
-function Book(title, author, numOfPages, read) {
-  this.title = title;
-  this.author = author;
-  this.numOfPages = numOfPages;
-  this.read = read;
-  this.info = function bookInformationToString() {
-    return `${title} by ${author}, ${numOfPages} pages, ${read ? 'read' : 'not read'}`;
-  };
+class Book {
+  constructor(title, author, numOfPages, read) {
+    this.title = title;
+    this.author = author;
+    this.numOfPages = numOfPages;
+    this.read = read;
+    this.info = function bookInformationToString() {
+      return `${title} by ${author}, ${numOfPages} pages, ${read ? 'read' : 'not read'}`;
+    };
+  }
 }
 
 function updateReadStatus(e) {
@@ -34,7 +36,6 @@ function createBookCard(book) {
   removeButton.classList.add('removeButton');
   removeButton.innerText = 'X';
   removeButton.dataset.bookTitle = book.title;
-  // eslint-disable-next-line no-use-before-define
   removeButton.addEventListener('click', removeBook);
   title.appendChild(removeButton);
   card.appendChild(title);
@@ -97,7 +98,8 @@ function hideAddBookForm() {
 
 addButton.addEventListener('click', showAddBookForm);
 
-submitButton.addEventListener('click', () => {
+submitButton.addEventListener('click', (e) => {
+  e.preventDefault();
   addBookToLibrary(formElements[0].value, formElements[1].value, formElements[2].value, readCheckbox.checked);
   hideAddBookForm();
   displayBooks();
