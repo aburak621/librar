@@ -5,8 +5,13 @@ const submitButton = document.querySelector('.submitButton');
 const formElements = document.querySelectorAll('.addBookForm>input');
 const readCheckbox = document.querySelector('#read');
 const overlay = document.querySelector('.overlay');
+const titleInput = document.getElementById('title');
+const authorInput = document.getElementById('author');
 let myLibrary = [];
 
+// requiredInputs.forEach(element => {
+//   element.setCustomValidity
+// });
 
 class Book {
   constructor(title, author, numOfPages, read) {
@@ -100,9 +105,17 @@ addButton.addEventListener('click', showAddBookForm);
 
 submitButton.addEventListener('click', (e) => {
   e.preventDefault();
-  addBookToLibrary(formElements[0].value, formElements[1].value, formElements[2].value, readCheckbox.checked);
-  hideAddBookForm();
-  displayBooks();
+  if(titleInput.validity.valueMissing) {
+    titleInput.setCustomValidity('Please enter the book\'s title.');
+    titleInput.reportValidity();
+  } else if (authorInput.validity.valueMissing) {
+    authorInput.setCustomValidity('Please enter the book\'s author.');
+    authorInput.reportValidity();
+  } else {
+    addBookToLibrary(formElements[0].value, formElements[1].value, formElements[2].value, readCheckbox.checked);
+    hideAddBookForm();
+    displayBooks();
+  }
 });
 
 overlay.addEventListener('click', () => {
